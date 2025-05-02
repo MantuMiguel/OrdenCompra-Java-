@@ -1,0 +1,101 @@
+//Clase OrdenCompra
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+
+public class OrdenCompra {
+   private static int identificador;
+   private String descripcion;
+   private  Date fecha;
+   private Cliente cliente;
+   private double []total;
+   private int []cantidadProducto;
+   private int tamano=4;
+   private Producto[]productos;
+
+//constructor
+    public OrdenCompra()
+    {  fecha=new Date();
+       identificador++;
+       productos=new Producto[tamano];
+       cantidadProducto=new int[tamano];
+         total=new double[tamano];
+    }
+
+    //metodo para agregar producto, calcular cantidad y total
+    public void agregarProducto(Producto pro,int cantidad)
+    {
+        for (var i=0;i<productos.length;i++)
+        {
+            if(productos[i]== null&&cantidadProducto[i]==0&&total[i]==0)
+            {
+                productos[i]=pro;
+                cantidadProducto[i]=cantidad;
+                total[i]=pro.getPrecio()*cantidad;
+                break;
+            }
+        }
+    }
+    public double calcularTotal()
+    {
+        //este es una api de java que toma un array y lo convierte en un stream, para luego sumar todos los elementos
+        //en este caso se suman todos los elementos del array total
+        return Arrays.stream(total).sum();
+    }
+    public String getFechaFormateada() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Formato: día/mes/año
+        return sdf.format(this.fecha);
+    }
+
+    public String listaProductos()
+    {
+        StringBuilder lista = new StringBuilder("PRODUCTOS EN LA ORDEN DE COMPRA:\n");
+        for (int i =0; i< productos.length;i++)
+        {
+            if(productos[i]==null||cantidadProducto[i]==0||total[i]==0)
+            {break;}
+            else{
+                lista.append(productos[i]).append(" ||Cantidad: ").append(cantidadProducto[i])
+                        .append(" ||Total: ").append(total[i]).append("/$").append("\n");
+            }
+        }
+        return lista.toString();
+    }
+
+    public int getIdentificador() {
+        return identificador;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public  String getFecha() {
+       return String.valueOf(fecha.getDay());
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente=cliente;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("*************************OrdenCompra**********************\n");
+        sb.append("Identificador De Compra: ").append(identificador);
+        sb.append("                  fecha: ").append(this.getFechaFormateada()).append('\n');
+        sb.append("Cliente: ").append(cliente);
+        sb.append(listaProductos());
+        sb.append("SubTotal: ").append(calcularTotal()).append("$").append('\n');
+          return sb.toString();
+    }
+}
+
