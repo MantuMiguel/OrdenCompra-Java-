@@ -1,0 +1,65 @@
+//Clase Enumeradores
+
+//Clase Enum Fabricante
+
+public enum Fabricante {
+    KELLOGS("Kellogs"),
+    GLORIA("Gloria"),
+    MARY("Mary"),
+    GRANERO("Granero");
+    private String name;
+    private Fabricante(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+
+//Clase Enum Producto
+public enum Producto {
+    //los enumeradores de los productos estan conectados con la clase enum de fabricante
+    //por lo que cada producto tiene un fabricante lo cual es una constante definida en la clase
+    CEREAL("Zucaritas",1.50,Fabricante.KELLOGS),
+    LECHE("Leche descremada",1.00,Fabricante.GLORIA),
+    ARROZ("arroz",2.50,Fabricante.MARY),
+    HUEVO("huevo",3.50,Fabricante.GRANERO);
+
+    private final String name;
+    private final double precio;
+    private final Fabricante fabricante;
+
+    //Es privado el constructor para que no se pueda instanciar
+    // y solo se pueda acceder a los elementos del enum
+    private Producto(String name, double precio, Fabricante fabricante) {
+        this.name = name;
+        this.precio = precio;
+        this.fabricante=fabricante;
+    }
+    public static void recorrerProductos()
+    { Producto[]product = Producto.values();
+        for(var i= 1;i<=product.length;i++)
+        {
+            System.out.println("Producto "+i+":"+product[i-1].name+" Fabricante: "+product[i-1].fabricante.getName()+" Precio: "+product[i-1].precio+" $");
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+    //Aqui se pasan por string los valores de los atributos
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer();
+        sb.append("||Producto: ").append(name).append('\t');
+        sb.append("  ||Fabricante: ").append(fabricante).append('\t');
+        sb.append("  ||Precio: ").append(precio).append("/$");
+        return sb.toString();
+    }
+}
