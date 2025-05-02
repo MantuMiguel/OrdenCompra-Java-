@@ -1,0 +1,31 @@
+//Clase Cliente
+public class Cliente {
+    private String name;
+    private String apellido;
+    public  Cliente(String name, String apellido) {
+        this.name = name;
+        this.apellido = apellido;
+    }
+    public String getName() {
+        return name;
+    }
+    public String getApellido() {
+        return this.apellido;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer();
+        sb.append("Nombre: ").append(name);
+        sb.append("   Apellido: ").append(apellido).append('\n');
+        return sb.toString();
+    }
+}
