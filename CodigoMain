@@ -1,0 +1,62 @@
+//main
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sr = new Scanner(System.in);
+        String respuesta="";
+        String respuesta2="";
+        int seleccion=0;
+        do {
+            OrdenCompra ordenCompra = new OrdenCompra();
+            System.out.println("Ingrese el nombre del cliente:");
+            String nombre = sr.nextLine();
+            System.out.println("Ingrese el apellido del cliente:");
+            String apellido = sr.nextLine();
+
+            //se crea un objeto cliente y se le asigna el nombre y apellido
+
+            Cliente nuevoCliente = new Cliente(nombre,apellido);
+
+            //se crea un objeto orden de compra y se le asigna el cliente
+
+
+
+            ordenCompra.setCliente(nuevoCliente);
+           do {
+               System.out.println("Bienvenido a la tienda de productos"+"\n"+"Los productos disponibles son:");
+               Producto.recorrerProductos();
+               System.out.println("Seleccione el producto que desea comprar:");
+               seleccion=sr.nextInt();
+               System.out.println("Cuantos productos desea comprar?");
+               int cantidad=sr.nextInt();
+               if(cantidad>0&&(seleccion>0&&seleccion<5)){
+                   switch (seleccion)
+                   {
+                       case 1-> ordenCompra.agregarProducto(Producto.CEREAL,cantidad);
+                       case 2-> ordenCompra.agregarProducto(Producto.LECHE,cantidad);
+                       case 3 -> ordenCompra.agregarProducto(Producto.ARROZ,cantidad);
+                       case 4 -> ordenCompra.agregarProducto(Producto.HUEVO,cantidad);
+                   }
+                   System.out.println("Deseas ingresar otro producto? si o no");
+                   sr.nextLine();
+                     respuesta2= sr.nextLine().trim();
+               }
+               else{
+                   String mensaje= cantidad<=0?"La cantidad de productos no puede ser menor o igual a 0":"El producto no existe";
+                   System.out.println(mensaje);
+               }
+              cantidad=0;
+           }while(seleccion<1||seleccion>4|| respuesta2.equalsIgnoreCase("si"));
+
+            System.out.println("Su orden de compra es:");
+            System.out.println(ordenCompra);
+
+            System.out.println("Deseas hacer otra compra? si o no");
+            respuesta= sr.nextLine().trim();
+
+
+        }while(respuesta.equalsIgnoreCase("si"));
+
+    }
+}
